@@ -12,6 +12,7 @@ const PORT = process.env.PORT || 3001;
 
 const app = express();
 
+
 // configuring the database
 mongoose.Promise = global.Promise;
 const databaseOptions = {

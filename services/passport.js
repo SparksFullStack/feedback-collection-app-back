@@ -3,14 +3,24 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const mongoose = require('mongoose');
 require('dotenv').config();
 
-const UserModel = mongoose.model('users')
+const UserModel = mongoose.model('users');
 
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: '/auth/google/callback' // this is the URL the user will be redirected to after logging in with OAuth
     }, (accessToken, refreshToken, profile, done) => {
-        const newUser = new UserModel({ googleID: profile.id });
-        console.log(newUser);
+        UserModel.findOne({ googleID: profile.id })
+            .then(user => {
+                if (user !== null) {
+                    console.log(`Found!`);
+                    // done(null, user);
+                } else {
+                    console.log(`Creating new user`)
+                    new UserModel({ googleID: profile.id })
+                        .save()
+                        .then(newUser => done(null, newUser));
+                }
+            });
     })
 );
