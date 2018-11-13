@@ -11,12 +11,14 @@ passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: '/auth/google/callback' // this is the URL the user will be redirected to after logging in with OAuth
-    }, (accessToken) => console.log(accessToken))
+    }, (accessToken, refreshToken, profile) => console.log(profile))
 );
 
 app.get('/auth/google', passport.authenticate('google', {
     scope: ['profile', 'email']
 }))
 
-app.get('/auth/google/callback', (req, res) => res.send('working!'))
+app.get('/auth/google/callback', passport.authenticate('google', {
+
+}))
 app.listen(PORT, () => console.log(`The server is listening on port ${PORT}`));
