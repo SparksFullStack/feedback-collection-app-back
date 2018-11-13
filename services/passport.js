@@ -5,6 +5,15 @@ require('dotenv').config();
 
 const UserModel = mongoose.model('users');
 
+passport.serializeUser((user, done) => {
+    done(null, user.id);
+})
+
+passport.deserializeUser((id, done) => {
+    UserModel.findById(id)
+        .then(user => done(null, user));
+})
+
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -14,7 +23,7 @@ passport.use(new GoogleStrategy({
             .then(user => {
                 if (user !== null) {
                     console.log(`Found!`);
-                    // done(null, user);
+                    done(null, user);
                 } else {
                     console.log(`Creating new user`)
                     new UserModel({ googleID: profile.id })

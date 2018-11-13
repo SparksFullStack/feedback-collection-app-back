@@ -1,5 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cookieSession = require('cookie-session');
+const passport = require('passport');
 require('dotenv').config();
 
 // models
@@ -11,6 +13,14 @@ require('./services/passport'); // this type of import runs the file but doesn't
 const PORT = process.env.PORT || 3001;
 
 const app = express();
+
+// final steps for setting up the OAuth flow
+app.use(cookieSession({ // instructs Express to use cookies
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    keys: [process.env.COOKIE_KEY]
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 // configuring the database
