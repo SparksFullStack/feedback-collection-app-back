@@ -36,6 +36,7 @@ mongoose.connection
     .on('error', (err) => console.log(`There was an error starting the database: \n${err}`));
 
 // routers
+app.get('/', (req, res) => res.send('Server is working!'));
 require('./routes/authRoutes')(app);
 
 app.listen(PORT, () => console.log(`The server is listening on port ${PORT}`));
