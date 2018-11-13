@@ -1,7 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
-require('./services/passport'); // this type of import runs the file but doesn't allow you to use it in the current file
 require('dotenv').config();
+
+// models
+require('./models/UserModel');
+
+// ** IMPORTANT: If you're using the above instead of require syntax for models, you need to make sure to run the passport code after the imports
+require('./services/passport'); // this type of import runs the file but doesn't allow you to use it in the current file
 
 const PORT = process.env.PORT || 3001;
 
