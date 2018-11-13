@@ -1,24 +1,12 @@
 const express = require('express');
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+require('./services/passport'); // this type of import runs the file but doesn't allow you to use it in the current file
 require('dotenv').config();
 
 const PORT = process.env.PORT || 3001;
 
 const app = express();
 
-passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: '/auth/google/callback' // this is the URL the user will be redirected to after logging in with OAuth
-    }, (accessToken, refreshToken, profile) => console.log(profile))
-);
+// routers
+require('./routes/authRoutes')(app);
 
-app.get('/auth/google', passport.authenticate('google', {
-    scope: ['profile', 'email']
-}))
-
-app.get('/auth/google/callback', passport.authenticate('google', {
-
-}))
 app.listen(PORT, () => console.log(`The server is listening on port ${PORT}`));
