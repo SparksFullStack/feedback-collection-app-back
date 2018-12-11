@@ -15,9 +15,10 @@ passport.deserializeUser((id, done) => {
 })
 
 passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: '/auth/google/callback' // this is the URL the user will be redirected to after logging in with OAuth
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: '/auth/google/callback', // this is the URL the user will be redirected to after logging in with OAuth
+        proxy: true,
     }, (accessToken, refreshToken, profile, done) => {
         UserModel.findOne({ googleID: profile.id })
             .then(user => {
