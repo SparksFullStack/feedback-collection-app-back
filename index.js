@@ -10,7 +10,7 @@ require('./models/UserModel');
 // ** IMPORTANT: If you're using the above instead of require syntax for models, you need to make sure to run the passport code after the imports
 require('./services/passport'); // this type of import runs the file but doesn't allow you to use it in the current file
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 5000;
 
 const app = express();
 
