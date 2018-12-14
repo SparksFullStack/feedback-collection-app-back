@@ -9,13 +9,12 @@ module.exports = (app) => {
         (req, res) => {
             // after the user successfully logs in we want to redirect them to the /surveys route
             res.redirect('/surveys');
-
         }
     )
 
     app.get('/api/logout', (req, res) => {
         req.logout();
-        res.send('You have successfully logged out!');
+        res.redirect('/');
     })
 
     app.get('/api/current_user', (req, res) => {
