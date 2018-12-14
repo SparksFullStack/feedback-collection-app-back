@@ -25,7 +25,7 @@ passport.use(new GoogleStrategy({
     const existingUser = await UserModel.findOne({ googleID: profile.id })
         if (existingUser !== null) {
             console.log(`Existing user found!`);
-            return done(null, user);
+            return done(null, existingUser);
         } 
         
         console.log(`Creating new user`)

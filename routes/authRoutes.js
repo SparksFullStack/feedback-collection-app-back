@@ -5,9 +5,13 @@ module.exports = (app) => {
         scope: ['profile', 'email']
     }))
     
-    app.get('/auth/google/callback', passport.authenticate('google', {
-    
-    }))
+    app.get('/auth/google/callback', passport.authenticate('google'),
+        (req, res) => {
+            // after the user successfully logs in we want to redirect them to the /surveys route
+            res.redirect('/surveys');
+
+        }
+    )
 
     app.get('/api/logout', (req, res) => {
         req.logout();
