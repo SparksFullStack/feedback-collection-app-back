@@ -23,6 +23,7 @@ app.use(cookieSession({ // instructs Express to use cookies
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.json());
 
 
 // configuring the database
@@ -40,5 +41,6 @@ mongoose.connection
 // routers
 
 require('./routes/authRoutes')(app);
+require('./routes/billingRoutes')(app);
 
 app.listen(PORT, () => console.log(`The server is listening on port ${PORT}`));
